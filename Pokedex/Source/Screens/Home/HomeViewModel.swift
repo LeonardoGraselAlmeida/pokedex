@@ -47,14 +47,32 @@ class HomeViewModel {
         if(count==0) { count = 1 }
         
         let url = URL(string: "https://api-pokemons-go.herokuapp.com/pokemon/all/\(count)/20")!
+        
         URLSession.shared.fetchData(for: url) { (result: Result<[Pokemon], Error>) in
             switch result {
             case .success(let newPokemons):
-                self.pokemons.append(contentsOf: newPokemons)
-                self.homeView.collectionView.reloadData()
+                DispatchQueue.main.async {
+                    self.pokemons.append(contentsOf: newPokemons)
+                    self.homeView.collectionView.reloadData()
+                }
             case .failure(let error):
                 print(error)
             }
+        }
+    }
+    
+    func setupCell(index: Int, cell: CustomCollectionViewCell) {
+        let type1 = getType1(at: index)
+        let type2 = getType2(at: index)
+        
+        cell.cardView.backgroundColor = BaseColor.shared.getColor(type: type1)
+        cell.cardView.title.text = getName(at: index)
+        cell.cardView.firstTag.tagText.text = type1
+        cell.cardView.secondTag.tagText.text = type2
+        cell.cardView.pokemonImageView.loadFrom(URLAddress: getUrlImagePokemon(at: index))
+        
+        if type2 == "" {
+            cell.cardView.secondTag.isHidden = true
         }
     }
 }

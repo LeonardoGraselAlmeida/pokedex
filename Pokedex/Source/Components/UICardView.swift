@@ -55,10 +55,8 @@ class UICardView: UIView {
     
     func setupCardView() {
         translatesAutoresizingMaskIntoConstraints = false
-        
         layer.cornerRadius = 16
         clipsToBounds = true
-        
         setConstraints()
     }
     
@@ -71,6 +69,9 @@ class UICardView: UIView {
         addSubview(pokemonImageView)
         
         NSLayoutConstraint.activate([
+            heightAnchor.constraint(equalToConstant: 150),
+            widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2 - 22),
+            
             title.topAnchor.constraint(equalTo: self.topAnchor, constant: 28),
             title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
@@ -80,13 +81,13 @@ class UICardView: UIView {
             secondTag.topAnchor.constraint(equalTo: firstTag.bottomAnchor, constant: 8),
             secondTag.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
-            pokeballImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 200),
-            pokeballImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 160),
+            pokeballImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
+            pokeballImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 10),
             pokeballImageView.heightAnchor.constraint(equalToConstant: 100),
             pokeballImageView.widthAnchor.constraint(equalToConstant: 120),
             
-            pokemonImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 200),
-            pokemonImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 180),
+            pokemonImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
+            pokemonImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 30),
             pokemonImageView.heightAnchor.constraint(equalToConstant: 160),
             pokemonImageView.widthAnchor.constraint(equalToConstant: 120),
         ])

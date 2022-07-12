@@ -29,18 +29,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
-        let type1 = viewModel.getType1(at: indexPath.row)
-        let type2 = viewModel.getType2(at: indexPath.row)
         
-        cell.cardView.backgroundColor = BaseColor.shared.getColor(type: type1)
-        cell.cardView.title.text = viewModel.getName(at: indexPath.row)
-        cell.cardView.firstTag.tagText.text = type1
-        cell.cardView.secondTag.tagText.text = type2
-        cell.cardView.pokemonImageView.loadFrom(URLAddress: viewModel.getUrlImagePokemon(at: indexPath.row))
-        
-        if type2 == "" {
-            cell.cardView.secondTag.isHidden = true
-        }
+        viewModel.setupCell(index: indexPath.row, cell: cell)
         
         return cell
     }
@@ -63,7 +53,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.pokemons.count - 4 {
+        if indexPath.row == viewModel.pokemons.count - 4 && viewModel.pokemons.count < 450 {
             viewModel.fetchData()
         }
     }
