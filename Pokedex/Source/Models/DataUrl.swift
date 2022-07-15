@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DataUrl: Codable  {
+struct DataUrl: Codable {
     let name: String?
     let url: String?
     

@@ -8,6 +8,7 @@
 import UIKit
 
 class HomeView: UIView {
+    
     // MARK: - UI
     lazy var stackView: UIStackView = {
         let stack = UIStackView()
@@ -40,7 +41,8 @@ class HomeView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = UIColor(white: 1, alpha: 0)
-        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
+        collectionView.register(CustomCollectionViewCell.self,
+                                forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         
         return collectionView
     }()
@@ -69,7 +71,6 @@ class HomeView: UIView {
         addSubview(pokeballImageView)
         addSubview(titleLabel)
         addSubview(collectionView)
-        
         NSLayoutConstraint.activate([
             pokeballImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: -40),
             pokeballImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 80),
@@ -84,7 +85,5 @@ class HomeView: UIView {
             collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
         ])
-        
     }
-    
 }

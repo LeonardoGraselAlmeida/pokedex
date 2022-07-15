@@ -16,7 +16,6 @@ class UITagView: UIView {
         label.text = "grass"
         label.textColor = .white
         
-        
         return label
     }()
     
@@ -29,15 +28,13 @@ class UITagView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func setupCardView() {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = UIColor(white: 1, alpha: 0.5)
         
         layer.cornerRadius = 8
         clipsToBounds = true
-        
-        
+            
         setConstraints()
     }
     
@@ -50,7 +47,7 @@ class UITagView: UIView {
             
             tagText.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             tagText.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            tagText.heightAnchor.constraint(equalToConstant: 20),
+            tagText.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
     

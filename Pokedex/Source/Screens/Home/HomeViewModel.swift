@@ -8,13 +8,10 @@
 import UIKit
 
 class HomeViewModel {
-    var homeView: HomeView
     var pokemons: [Pokemon]
     
     init() {
-        self.homeView = HomeView()
         self.pokemons = []
-        self.fetchData()
     }
     
     func getID(at index: Int) -> Int {
@@ -42,25 +39,6 @@ class HomeViewModel {
         return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png"
     }
     
-    func fetchData() {
-        var count = pokemons.count
-        if(count==0) { count = 1 }
-        
-        let url = URL(string: "https://api-pokemons-go.herokuapp.com/pokemon/all/\(count)/20")!
-        
-        URLSession.shared.fetchData(for: url) { (result: Result<[Pokemon], Error>) in
-            switch result {
-            case .success(let newPokemons):
-                DispatchQueue.main.async {
-                    self.pokemons.append(contentsOf: newPokemons)
-                    self.homeView.collectionView.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
     func setupCell(index: Int, cell: CustomCollectionViewCell) {
         let type1 = getType1(at: index)
         let type2 = getType2(at: index)
@@ -69,11 +47,8 @@ class HomeViewModel {
         cell.cardView.title.text = getName(at: index)
         cell.cardView.firstTag.tagText.text = type1
         cell.cardView.secondTag.tagText.text = type2
+        cell.cardView.secondTag.isHidden = type2.isEmpty
         cell.cardView.pokemonImageView.loadFrom(URLAddress: getUrlImagePokemon(at: index))
         
-        if type2 == "" {
-            cell.cardView.secondTag.isHidden = true
-        }
     }
 }
-

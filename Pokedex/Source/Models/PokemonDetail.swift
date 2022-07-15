@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct Ability: Codable  {
+struct Ability: Codable {
     let ability: DataUrl?
     let slot: Int?
     
@@ -16,7 +16,7 @@ struct Ability: Codable  {
     }
 }
 
-struct Other: Codable  {
+struct Other:   Codable {
     let frontDefault: String?
     
     enum CodingKeys: String, CodingKey {
@@ -24,7 +24,7 @@ struct Other: Codable  {
     }
 }
 
-struct OtherSpretie: Codable  {
+struct OtherSpretie: Codable {
     let dreamWorld: Other?
     let home: Other?
     let officialArtwork: Other?
@@ -36,7 +36,7 @@ struct OtherSpretie: Codable  {
     }
 }
 
-struct Sprities: Codable  {
+struct Sprities: Codable {
     let frontDefault: String?
     let backDefault: String?
     let backShiny: String?
@@ -52,7 +52,7 @@ struct Sprities: Codable  {
     }
 }
 
-struct Stat: Codable  {
+struct Stat: Codable {
     let baseStat: Int?
     let effort: Int?
     let stat: DataUrl?
@@ -64,7 +64,7 @@ struct Stat: Codable  {
     }
 }
 
-struct Types: Codable  {
+struct Types: Codable {
     let slot: Int?
     let type: DataUrl?
     
@@ -74,7 +74,7 @@ struct Types: Codable  {
     }
 }
 
-struct PokemonDetail: Codable  {
+struct PokemonDetail: Codable {
     let id: Int?
     let baseExperience: Int?
     let height: Int?

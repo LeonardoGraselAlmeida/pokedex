@@ -10,7 +10,7 @@ import UIKit
 class BaseColor {
     static let shared = BaseColor()
     
-    private let colors: Dictionary<String, UIColor> = [
+    private let colors = [
         "rock": UIColor(red: 0.714, green: 0.62, blue: 0.192, alpha: 1),
         "normal": UIColor(red: 0.667, green: 0.651, blue: 0.498, alpha: 1),
         "ghost": UIColor(red: 0.439, green: 0.333, blue: 0.608, alpha: 1),

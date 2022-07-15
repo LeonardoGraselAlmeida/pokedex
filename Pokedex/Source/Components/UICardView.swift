@@ -52,14 +52,12 @@ class UICardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func setupCardView() {
         translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 16
         clipsToBounds = true
         setConstraints()
     }
-    
     
     func setConstraints() {
         addSubview(title)
@@ -89,7 +87,8 @@ class UICardView: UIView {
             pokemonImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
             pokemonImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 30),
             pokemonImageView.heightAnchor.constraint(equalToConstant: 160),
-            pokemonImageView.widthAnchor.constraint(equalToConstant: 120),
+            pokemonImageView.widthAnchor.constraint(equalToConstant: 120)
+            
         ])
     }
     

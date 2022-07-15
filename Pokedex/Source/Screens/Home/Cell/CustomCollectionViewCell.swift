@@ -14,7 +14,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let card = UICardView()
         return card
     }()
-  
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(cardView)
@@ -23,5 +23,4 @@ class CustomCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

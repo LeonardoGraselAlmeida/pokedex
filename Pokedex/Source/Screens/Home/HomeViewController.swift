@@ -10,11 +10,31 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var viewModel = HomeViewModel()
+    var homeView = HomeView()
     
     override func loadView() {
-        self.view = viewModel.homeView
-        viewModel.homeView.collectionView.delegate = self
-        viewModel.homeView.collectionView.dataSource = self
+        self.view = homeView
+        homeView.collectionView.delegate = self
+        homeView.collectionView.dataSource = self
+        fetchData()
+    }
+    
+    func fetchData() {
+        let count = viewModel.pokemons.count + 1
+        
+        let url = URL(string: "https://api-pokemons-go.herokuapp.com/pokemon/all/\(count)/20")!
+        
+        URLSession.shared.fetchData(for: url) { (result: Result<[Pokemon], Error>) in
+            switch result {
+            case .success(let newPokemons):
+                    DispatchQueue.main.async {
+                        self.viewModel.pokemons.append(contentsOf: newPokemons)
+                        self.homeView.collectionView.reloadData()
+                    }
+            case .failure(let error):
+                    print(error)
+            }
+        }
     }
 }
 
@@ -28,7 +48,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
+                                                                CustomCollectionViewCell.identifier, for: indexPath) as? CustomCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         
         viewModel.setupCell(index: indexPath.row, cell: cell)
         
@@ -53,9 +76,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.pokemons.count - 4 && viewModel.pokemons.count < 450 {
-            viewModel.fetchData()
+        if indexPath.row == viewModel.pokemons.count - 4 && viewModel.pokemons.count < 415 {
+            fetchData()
         }
     }
 }
-
