@@ -23,4 +23,15 @@ class CustomCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setIdPokemon(_ id: Int) {
+        cardView.pokemonImageView.loadFrom(URLAddress: getUrlImagePokemon(with: id)) {
+            self.cardView.pokemonImageView.activityView.stopAnimating()
+        }
+    }
+    
+    func getUrlImagePokemon(with id: Int) -> String {
+        return "https://cdn.traction.one/pokedex/pokemon/\(id).png"
+    }
+    
 }

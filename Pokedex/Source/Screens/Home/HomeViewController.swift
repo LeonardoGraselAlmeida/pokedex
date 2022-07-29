@@ -8,6 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    var navigateToPokemonDetail: ((PokemonDetail) -> Void)?
     
     var viewModel = HomeViewModel()
     var homeView = HomeView()
@@ -20,29 +21,15 @@ class HomeViewController: UIViewController {
     }
     
     func fetchData() {
-        let count = viewModel.pokemons.count + 1
-        
-        let url = URL(string: "https://api-pokemons-go.herokuapp.com/pokemon/all/\(count)/20")!
-        
-        URLSession.shared.fetchData(for: url) { (result: Result<[Pokemon], Error>) in
-            switch result {
-            case .success(let newPokemons):
-                    DispatchQueue.main.async {
-                        self.viewModel.pokemons.append(contentsOf: newPokemons)
-                        self.homeView.collectionView.reloadData()
-                    }
-            case .failure(let error):
-                    print(error)
+        viewModel.fetchData {
+            DispatchQueue.main.async {
+                self.homeView.collectionView.reloadData()
             }
         }
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
+extension HomeViewController:  UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.pokemons.count
     }
@@ -76,8 +63,29 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.pokemons.count - 4 && viewModel.pokemons.count < 415 {
+        if indexPath.row == viewModel.pokemons.count - 2 && viewModel.pokemons.count < 415 {
             fetchData()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let pokemonId = viewModel.getID(at: indexPath.row)
+        self.fetchPokemonDetail(with: pokemonId)
+    }
+    
+    func fetchPokemonDetail(with pokemonId: Int) {
+        
+        let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(pokemonId)")!
+        
+        URLSession.shared.fetchData(for: url) { (result: Result<PokemonDetail, Error>) in
+            switch result {
+            case .success(let pokemonDetail):
+                DispatchQueue.main.async {
+                    self.navigateToPokemonDetail?(pokemonDetail)
+                }
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 }

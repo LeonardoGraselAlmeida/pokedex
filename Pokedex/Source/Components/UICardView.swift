@@ -13,18 +13,18 @@ class UICardView: UIView {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Poppins-Bold", size: 14)
-        label.text = "Bulbassauro"
+        label.text = ""
         label.textColor = .white
         
         return label
     }()
     
-    lazy var firstTag: UITagView = {
+    lazy var primaryType: UITagView = {
         var tagView = UITagView()
         return tagView
     }()
     
-    lazy var secondTag: UITagView = {
+    lazy var secondaryType: UITagView = {
         var tagView = UITagView()
         return tagView
     }()
@@ -39,8 +39,18 @@ class UICardView: UIView {
     }()
     
     lazy var pokemonImageView: UIImagePokemonView = {
-        let imageView = UIImagePokemonView(frame: .zero, pokemonID: 1)
+        let imageView = UIImagePokemonView(frame: .zero, pokemonID: 0)
         return imageView
+    }()
+    
+    lazy var pokedexNumberLabel: UILabel = {
+        var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.font = UIFont(name: "Poppins-Bold", size: 12)
+        label.text = "#000"
+        
+        return label
     }()
     
     override init(frame: CGRect) {
@@ -61,8 +71,9 @@ class UICardView: UIView {
     
     func setConstraints() {
         addSubview(title)
-        addSubview(firstTag)
-        addSubview(secondTag)
+        addSubview(pokedexNumberLabel)
+        addSubview(primaryType)
+        addSubview(secondaryType)
         addSubview(pokeballImageView)
         addSubview(pokemonImageView)
         
@@ -73,21 +84,24 @@ class UICardView: UIView {
             title.topAnchor.constraint(equalTo: self.topAnchor, constant: 28),
             title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
-            firstTag.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 8),
-            firstTag.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            pokedexNumberLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            pokedexNumberLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             
-            secondTag.topAnchor.constraint(equalTo: firstTag.bottomAnchor, constant: 8),
-            secondTag.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            primaryType.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 8),
+            primaryType.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            
+            secondaryType.topAnchor.constraint(equalTo: primaryType.bottomAnchor, constant: 8),
+            secondaryType.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
             pokeballImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
             pokeballImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 10),
             pokeballImageView.heightAnchor.constraint(equalToConstant: 100),
             pokeballImageView.widthAnchor.constraint(equalToConstant: 120),
             
-            pokemonImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
-            pokemonImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 30),
-            pokemonImageView.heightAnchor.constraint(equalToConstant: 160),
-            pokemonImageView.widthAnchor.constraint(equalToConstant: 120)
+            pokemonImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+            pokemonImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+            pokemonImageView.heightAnchor.constraint(equalToConstant: 80),
+            pokemonImageView.widthAnchor.constraint(equalToConstant: 80)
             
         ])
     }

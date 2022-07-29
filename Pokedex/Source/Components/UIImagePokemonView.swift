@@ -9,10 +9,22 @@ import UIKit
 
 class UIImagePokemonView: UIImageView {
     
-    var url: String
+    lazy var activityView: UIActivityIndicatorView = {
+       let activityView = UIActivityIndicatorView()
+        activityView.translatesAutoresizingMaskIntoConstraints = false
+        activityView.color = .gray
+        
+        return activityView
+    }()
+    
+    var url: String {
+        willSet {
+            activityView.startAnimating()
+        }
+    }
     
     init(frame: CGRect, pokemonID: Int) {
-        self.url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(pokemonID).png"
+        self.url = ""
         super.init(frame: frame)
         
         setupView()
@@ -24,8 +36,24 @@ class UIImagePokemonView: UIImageView {
     
     func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
-        contentMode = .center
+        contentMode = .scaleAspectFit
         
-        loadFrom(URLAddress: url)
+        activityView.startAnimating()
+        loadFrom(URLAddress: url) {
+            self.activityView.stopAnimating()
+        }
+
+        addSubview(activityView)
+        setupConstraints()
+    }
+    
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            activityView.topAnchor.constraint(equalTo: self.topAnchor),
+            activityView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            activityView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            activityView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+            
     }
 }

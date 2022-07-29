@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIImageView {
-    func loadFrom(URLAddress: String) {
+    func loadFrom(URLAddress: String, completionHandler: @escaping () -> Void) {
         guard let url = URL(string: URLAddress) else {
             return
         }
@@ -17,6 +17,7 @@ extension UIImageView {
             if let imageData = try? Data(contentsOf: url) {
                 if let loadedImage = UIImage(data: imageData) {
                     self?.image = loadedImage
+                    completionHandler()
                 }
             }
         }

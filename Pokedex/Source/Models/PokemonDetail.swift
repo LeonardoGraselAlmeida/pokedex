@@ -7,8 +7,8 @@
 import Foundation
 
 struct Ability: Codable {
-    let ability: DataUrl?
-    let slot: Int?
+    let ability: DataUrl
+    let slot: Int
     
     enum CodingKeys: String, CodingKey {
         case ability
@@ -17,7 +17,7 @@ struct Ability: Codable {
 }
 
 struct Other:   Codable {
-    let frontDefault: String?
+    let frontDefault: String
     
     enum CodingKeys: String, CodingKey {
         case frontDefault = "front_default"
@@ -25,9 +25,9 @@ struct Other:   Codable {
 }
 
 struct OtherSpretie: Codable {
-    let dreamWorld: Other?
-    let home: Other?
-    let officialArtwork: Other?
+    let dreamWorld: Other
+    let home: Other
+    let officialArtwork: Other
     
     enum CodingKeys: String, CodingKey {
         case dreamWorld = "dream_world"
@@ -37,11 +37,11 @@ struct OtherSpretie: Codable {
 }
 
 struct Sprities: Codable {
-    let frontDefault: String?
-    let backDefault: String?
-    let backShiny: String?
-    let frontShiny: String?
-    let other: OtherSpretie?
+    let frontDefault: String
+    let backDefault: String
+    let backShiny: String
+    let frontShiny: String
+    let other: OtherSpretie
     
     enum CodingKeys: String, CodingKey {
         case frontDefault = "front_default"
@@ -53,9 +53,9 @@ struct Sprities: Codable {
 }
 
 struct Stat: Codable {
-    let baseStat: Int?
-    let effort: Int?
-    let stat: DataUrl?
+    let baseStat: Int
+    let effort: Int
+    let stat: DataUrl
     
     enum CodingKeys: String, CodingKey {
         case baseStat = "base_stat"
@@ -65,8 +65,8 @@ struct Stat: Codable {
 }
 
 struct Types: Codable {
-    let slot: Int?
-    let type: DataUrl?
+    let slot: Int
+    let type: DataUrl
     
     enum CodingKeys: String, CodingKey {
         case slot
@@ -75,16 +75,17 @@ struct Types: Codable {
 }
 
 struct PokemonDetail: Codable {
-    let id: Int?
-    let baseExperience: Int?
-    let height: Int?
-    let weight: Int?
-    let abilities: [Ability]?
-    let name: String?
-    let order: Int?
+    let id: Int
+    let baseExperience: Int
+    let height: Int
+    let weight: Int
+    let abilities: [Ability]
+    let name: String
+    let order: Int
     let sprities: Sprities?
-    let stats: [Stat]?
-    let types: [Types]?
+    let stats: [Stat]
+    let types: [Types]
+    let species: DataUrl?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -97,5 +98,6 @@ struct PokemonDetail: Codable {
         case sprities
         case stats
         case types
+        case species
     }
 }

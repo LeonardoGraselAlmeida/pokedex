@@ -13,7 +13,7 @@ class UITagView: UIView {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Poppins-Bold", size: 10)
-        label.text = "grass"
+        label.text = ""
         label.textColor = .white
         
         return label
@@ -30,7 +30,7 @@ class UITagView: UIView {
     
     func setupCardView() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = UIColor(white: 1, alpha: 0.5)
+        backgroundColor = UIColor(white: 1, alpha: 0.4)
         
         layer.cornerRadius = 8
         clipsToBounds = true

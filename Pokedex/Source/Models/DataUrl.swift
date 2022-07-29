@@ -8,8 +8,8 @@
 import Foundation
 
 struct DataUrl: Codable {
-    let name: String?
-    let url: String?
+    let name: String
+    let url: String
     
     enum CodingKeys: String, CodingKey {
         case name
