@@ -21,7 +21,7 @@ class HomeCoordinator: Coordinator {
     }
     
     func navigateToPokemonDetail(with pokemonDetail: PokemonDetail) {
-        let viewController = DetailViewController(with: pokemonDetail)
+        let viewController = PokemonDetailViewController(with: pokemonDetail)
         navigationController.pushViewController(viewController, animated: true)
     }
 }

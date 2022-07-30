@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StatusPokemonView: UIView {
+class PokemonDetailStatusView: UIView {
     
     lazy private var hpLabel: UILabel = {
         let label = UILabel()

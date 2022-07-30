@@ -10,22 +10,26 @@ import UIKit
 class HomeViewController: UIViewController {
     var navigateToPokemonDetail: ((PokemonDetail) -> Void)?
     
-    var viewModel = HomeViewModel()
-    var homeView = HomeView()
+    private var homeView: HomeView = HomeView()
+    
+    private var viewModel:HomeViewModel
+    private var network: PokemonNetwork
+    
+    init(network: PokemonNetwork = PokemonNetwork()) {
+        self.network = network
+        self.viewModel = HomeViewModel()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = homeView
-        homeView.collectionView.delegate = self
-        homeView.collectionView.dataSource = self
-        fetchData()
-    }
-    
-    func fetchData() {
-        viewModel.fetchData {
-            DispatchQueue.main.async {
-                self.homeView.collectionView.reloadData()
-            }
-        }
+        self.homeView.collectionView.delegate = self
+        self.homeView.collectionView.dataSource = self
+        self.fetchPokemonList()
     }
 }
 
@@ -35,8 +39,9 @@ extension HomeViewController:  UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
-                                                                CustomCollectionViewCell.identifier, for: indexPath) as? CustomCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier,
+                                                            for: indexPath) as? CustomCollectionViewCell
+        else {
             return UICollectionViewCell()
         }
         
@@ -64,7 +69,7 @@ extension HomeViewController:  UICollectionViewDataSource, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.row == viewModel.pokemons.count - 2 && viewModel.pokemons.count < 415 {
-            fetchData()
+            fetchPokemonList()
         }
     }
     
@@ -72,12 +77,27 @@ extension HomeViewController:  UICollectionViewDataSource, UICollectionViewDeleg
         let pokemonId = viewModel.getID(at: indexPath.row)
         self.fetchPokemonDetail(with: pokemonId)
     }
+}
+
+private extension HomeViewController {
+    func fetchPokemonList() {
+        let count = self.viewModel.pokemons.count + 1
+        
+        network.fetchPokemonList(from: count) { (result: Result<[PokemonModel], Error>) in
+            switch result {
+            case .success(let newPokemons):
+                DispatchQueue.main.async {
+                    self.viewModel.pokemons.append(contentsOf: newPokemons)
+                    self.homeView.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
     
     func fetchPokemonDetail(with pokemonId: Int) {
-        
-        let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(pokemonId)")!
-        
-        URLSession.shared.fetchData(for: url) { (result: Result<PokemonDetail, Error>) in
+        network.fetchPokemonDetail(from: pokemonId) { (result: Result<PokemonDetail, Error>) in
             switch result {
             case .success(let pokemonDetail):
                 DispatchQueue.main.async {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DetailViewModel {
+class PokemonDetailViewModel {
     let pokemonDetail: PokemonDetail?
     
     init(with pokemonDetail: PokemonDetail) {

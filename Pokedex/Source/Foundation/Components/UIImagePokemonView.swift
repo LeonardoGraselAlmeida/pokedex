@@ -26,8 +26,7 @@ class UIImagePokemonView: UIImageView {
     init(frame: CGRect, pokemonID: Int) {
         self.url = ""
         super.init(frame: frame)
-        
-        setupView()
+        self.setupView()
     }
     
     required init?(coder: NSCoder) {
@@ -35,16 +34,12 @@ class UIImagePokemonView: UIImageView {
     }
     
     func setupView() {
-        translatesAutoresizingMaskIntoConstraints = false
-        contentMode = .scaleAspectFit
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.contentMode = .scaleAspectFit
         
-        activityView.startAnimating()
-        loadFrom(URLAddress: url) {
-            self.activityView.stopAnimating()
-        }
-
-        addSubview(activityView)
-        setupConstraints()
+        self.addSubview(activityView)
+        
+        self.setupConstraints()
     }
     
     func setupConstraints() {

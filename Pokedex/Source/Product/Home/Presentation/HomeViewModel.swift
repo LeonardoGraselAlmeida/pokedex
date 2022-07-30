@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeViewModel {
-    var pokemons: [Pokemon]
+    var pokemons: [PokemonModel]
     
     init() {
         self.pokemons = []
@@ -47,21 +47,5 @@ class HomeViewModel {
         cell.cardView.secondaryType.isHidden = type2.isEmpty
         cell.setIdPokemon(getID(at: index))
         
-    }
-    
-    func fetchData(completionHandler: @escaping () -> Void) {
-        let count = self.pokemons.count + 1
-        
-        let url = URL(string: "https://api-pokemons-go.herokuapp.com/pokemon/all/\(count)/20")!
-        
-        URLSession.shared.fetchData(for: url) { (result: Result<[Pokemon], Error>) in
-            switch result {
-            case .success(let newPokemons):
-                self.pokemons.append(contentsOf: newPokemons)
-                completionHandler()
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 }

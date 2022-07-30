@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailView: UIView {
+class PokemonDetailView: UIView {
     
     // MARK: - UI
     lazy var pokedexNumberLabel: UILabel = {
@@ -91,14 +91,14 @@ class DetailView: UIView {
         return segmented
     }()
     
-    lazy var aboutView: AboutPokemonView = {
-        let view = AboutPokemonView()
+    lazy var aboutView: PokemonDetailAboutView = {
+        let view = PokemonDetailAboutView()
         
         return view
     }()
     
-    lazy var statusView: StatusPokemonView = {
-        let view = StatusPokemonView()
+    lazy var statusView: PokemonDetailStatusView = {
+        let view = PokemonDetailStatusView()
         view.alpha = 0
         
         return view

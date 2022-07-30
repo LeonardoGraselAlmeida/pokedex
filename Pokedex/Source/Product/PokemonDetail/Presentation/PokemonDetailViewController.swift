@@ -7,13 +7,13 @@
 
 import UIKit
 
-class DetailViewController : UIViewController {
+class PokemonDetailViewController : UIViewController {
     
-    let detailView: DetailView = DetailView()
-    let detailModel: DetailViewModel
+    let detailView: PokemonDetailView = PokemonDetailView()
+    let detailModel: PokemonDetailViewModel
     
     init(with pokemonDetail: PokemonDetail) {
-        self.detailModel = DetailViewModel(with: pokemonDetail)
+        self.detailModel = PokemonDetailViewModel(with: pokemonDetail)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,7 +28,7 @@ class DetailViewController : UIViewController {
     }
 }
 
-extension DetailViewController {
+extension PokemonDetailViewController {
     func configView() {
         let pokemonName = detailModel.getPokemonName()
         let pokedexNumber = detailModel.getPokedexNumber()
