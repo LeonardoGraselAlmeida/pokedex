@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController()
         window?.rootViewController = navigationController
         
-        let coordinator = HomeCoordinator(navigationController: navigationController)
+        let coordinator = PokemonListCoordinator(navigationController: navigationController)
         coordinator.start()
     }
 }

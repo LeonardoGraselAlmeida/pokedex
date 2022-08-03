@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeView: UIView {
+class PokemonListView: UIView {
     
     // MARK: - UI
     lazy var stackView: UIStackView = {
@@ -65,12 +65,13 @@ class HomeView: UIView {
     
     private func setup() {
         backgroundColor = .white
-    }
-    
-    private func setConstraints() {
+        
         addSubview(pokeballImageView)
         addSubview(titleLabel)
         addSubview(collectionView)
+    }
+    
+    private func setConstraints() {
         NSLayoutConstraint.activate([
             pokeballImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: -40),
             pokeballImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 80),

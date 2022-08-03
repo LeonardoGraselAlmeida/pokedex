@@ -34,4 +34,18 @@ class CustomCollectionViewCell: UICollectionViewCell {
         return "https://cdn.traction.one/pokedex/pokemon/\(id).png"
     }
     
+    func setupCell(with viewModel: CustomCollectionCellViewModel) {
+        let type1 = viewModel.getPrimaryType()
+        let type2 = viewModel.getSecondaryType()
+        
+        self.cardView.backgroundColor = BaseColor.shared.getColor(type: type1)
+        self.cardView.pokedexNumberLabel.text = viewModel.getPokedexNumber()
+        self.cardView.title.text = viewModel.getName()
+        self.cardView.primaryType.tagText.text = type1
+        self.cardView.secondaryType.tagText.text = type2
+        self.cardView.secondaryType.isHidden = type2.isEmpty
+        
+        self.setIdPokemon(viewModel.getID())
+    }
+    
 }

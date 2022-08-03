@@ -183,4 +183,53 @@ class PokemonDetailView: UIView {
             
         ])
     }
+    
+    func configView(with detailModel: PokemonDetailViewModel) {
+        let pokemonName = detailModel.getPokemonName()
+        let pokedexNumber = detailModel.getPokedexNumber()
+        let primaryType = detailModel.getPrimaryType()
+        let secondaryType = detailModel.getSecondaryType()
+        let urlImagePokemon = detailModel.getUrlImagePokemon()
+        let specie = detailModel.getSpecie()
+        let height = detailModel.getHeight()
+        let weight = detailModel.getWeight()
+        let abilities = detailModel.getAbilities()
+        let hp = detailModel.getHpStats()
+        let attack = detailModel.getAttackStats()
+        let defense = detailModel.getDefenseStats()
+        let spAttack = detailModel.getSpAttackStats()
+        let spDefense = detailModel.getSpDefenseStats()
+        let speed = detailModel.getSpeedStats()
+        let total = detailModel.getTotalStats()
+        
+        self.backgroundColor = BaseColor.shared.getColor(type: primaryType)
+        self.pokemonLabel.text = pokemonName
+        self.pokedexNumberLabel.text = pokedexNumber
+        self.primaryType.tagText.text = primaryType.capitalized
+        self.secondaryType.tagText.text = secondaryType.capitalized
+        self.secondaryType.isHidden = secondaryType.isEmpty
+        self.pokemonImageView.loadFrom(URLAddress: urlImagePokemon) {
+            self.pokemonImageView.activityView.stopAnimating()
+        }
+        self.aboutView.speciesValueLabel.text = specie
+        self.aboutView.heightValueLabel.text = height
+        self.aboutView.weightValueLabel.text = weight
+        self.aboutView.abilitiesValueLabel.text = abilities
+        
+        self.statusView.hpValueLabel.text = String(hp)
+        self.statusView.attackValueLabel.text = String(attack)
+        self.statusView.defenseValueLabel.text = String(defense)
+        self.statusView.spAttackValueLabel.text = String(spAttack)
+        self.statusView.spDefenseValueLabel.text = String(spDefense)
+        self.statusView.speedValueLabel.text = String(speed)
+        self.statusView.totalValueLabel.text = String(total)
+        
+        self.statusView.hpProgress.setProgress(Float(hp)/100, animated: false)
+        self.statusView.attackProgress.setProgress(Float(attack)/100, animated: false)
+        self.statusView.defenseProgress.setProgress(Float(defense)/100, animated: false)
+        self.statusView.spAttackProgress.setProgress(Float(spAttack)/100, animated: false)
+        self.statusView.spDefenseProgress.setProgress(Float(spDefense)/100, animated: false)
+        self.statusView.speedProgress.setProgress(Float(speed)/100, animated: false)
+        self.statusView.totalProgress.setProgress(Float(total)/600, animated: false)
+    }
 }

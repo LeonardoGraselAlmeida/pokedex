@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct PokemonModel: Codable {
-    let id: Int?
-    let name: String?
-    let pokedexNumber: Int?
-    let type1: String?
+struct PokemonListModel: Codable {
+    let id: Int
+    let name: String
+    let pokedexNumber: Int
+    let type1: String
     let type2: String?
     
     enum CodingKeys: String, CodingKey {

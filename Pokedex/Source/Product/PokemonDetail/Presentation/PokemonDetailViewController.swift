@@ -9,8 +9,8 @@ import UIKit
 
 class PokemonDetailViewController : UIViewController {
     
-    let detailView: PokemonDetailView = PokemonDetailView()
-    let detailModel: PokemonDetailViewModel
+    private let detailView: PokemonDetailView = PokemonDetailView()
+    private let detailModel: PokemonDetailViewModel
     
     init(with pokemonDetail: PokemonDetail) {
         self.detailModel = PokemonDetailViewModel(with: pokemonDetail)
@@ -23,60 +23,23 @@ class PokemonDetailViewController : UIViewController {
     
     override func loadView() {
         self.view = detailView
-        configNavigationBar()
-        configView()
+        
+        self.configView()
+        self.configNavigationBar()
+        
+        self.fetchPokemonDetail()
     }
 }
 
-extension PokemonDetailViewController {
-    func configView() {
-        let pokemonName = detailModel.getPokemonName()
-        let pokedexNumber = detailModel.getPokedexNumber()
-        let primaryType = detailModel.getPrimaryType()
-        let secondaryType = detailModel.getSecondaryType()
-        let urlImagePokemon = detailModel.getUrlImagePokemon()
-        let specie = detailModel.getSpecie()
-        let height = detailModel.getHeight()
-        let weight = detailModel.getWeight()
-        let abilities = detailModel.getAbilities()
-        let hp = detailModel.getHpStats()
-        let attack = detailModel.getAttackStats()
-        let defense = detailModel.getDefenseStats()
-        let spAttack = detailModel.getSpAttackStats()
-        let spDefense = detailModel.getSpDefenseStats()
-        let speed = detailModel.getSpeedStats()
-        let total = detailModel.getTotalStats()
-        
-        self.detailView.backgroundColor = BaseColor.shared.getColor(type: primaryType)
-        self.detailView.pokemonLabel.text = pokemonName
-        self.detailView.pokedexNumberLabel.text = pokedexNumber
-        self.detailView.primaryType.tagText.text = primaryType.capitalized
-        self.detailView.secondaryType.tagText.text = secondaryType.capitalized
-        self.detailView.secondaryType.isHidden = secondaryType.isEmpty
-        self.detailView.pokemonImageView.loadFrom(URLAddress: urlImagePokemon) {
-            self.detailView.pokemonImageView.activityView.stopAnimating()
+private extension PokemonDetailViewController {
+    
+    func fetchPokemonDetail() {
+        self.detailModel.fetchPokemonDetail {
+            self.detailView.configView(with: self.detailModel)
         }
-        self.detailView.aboutView.speciesValueLabel.text = specie
-        self.detailView.aboutView.heightValueLabel.text = height
-        self.detailView.aboutView.weightValueLabel.text = weight
-        self.detailView.aboutView.abilitiesValueLabel.text = abilities
-        
-        self.detailView.statusView.hpValueLabel.text = String(hp)
-        self.detailView.statusView.attackValueLabel.text = String(attack)
-        self.detailView.statusView.defenseValueLabel.text = String(defense)
-        self.detailView.statusView.spAttackValueLabel.text = String(spAttack)
-        self.detailView.statusView.spDefenseValueLabel.text = String(spDefense)
-        self.detailView.statusView.speedValueLabel.text = String(speed)
-        self.detailView.statusView.totalValueLabel.text = String(total)
-        
-        self.detailView.statusView.hpProgress.setProgress(Float(hp)/100, animated: false)
-        self.detailView.statusView.attackProgress.setProgress(Float(attack)/100, animated: false)
-        self.detailView.statusView.defenseProgress.setProgress(Float(defense)/100, animated: false)
-        self.detailView.statusView.spAttackProgress.setProgress(Float(spAttack)/100, animated: false)
-        self.detailView.statusView.spDefenseProgress.setProgress(Float(spDefense)/100, animated: false)
-        self.detailView.statusView.speedProgress.setProgress(Float(speed)/100, animated: false)
-        self.detailView.statusView.totalProgress.setProgress(Float(total)/600, animated: false)
-        
+    }
+    
+    func configView() {
         self.detailView.segmentedControl.addTarget(self, action: #selector(segmentedValueChanged), for: .valueChanged)
     }
     
@@ -86,26 +49,11 @@ extension PokemonDetailViewController {
             style: .plain,
             target: self,
             action: #selector(backNavigation))
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "heart")?.withTintColor(.white, renderingMode: .alwaysOriginal),
-            style: .plain,
-            target: self,
-            action: #selector(addFavorite))
     }
     
     @objc
     func backNavigation() {
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc
-    func addFavorite() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "heart.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal),
-            style: .plain,
-            target: self,
-            action: nil)
     }
     
     @objc func segmentedValueChanged(_ sender: UISegmentedControl) {

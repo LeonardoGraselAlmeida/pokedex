@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 enum NetworkError: Error {
     case decodeError
     case noData

@@ -8,7 +8,7 @@
 import UIKit
 
 class PokemonDetailCoordinator: Coordinator {
-    let navigationController: UINavigationController
+    private let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -18,7 +18,6 @@ class PokemonDetailCoordinator: Coordinator {
         let pokemonDetail = PokemonDetail(id: 0, baseExperience: 0, height: 0, weight: 0, abilities: [], name: "", order: 0, sprities: nil, stats: [], types: [], species: nil)
         
         let viewController = PokemonDetailViewController(with: pokemonDetail)
-        
         navigationController.pushViewController(viewController, animated: true)
     }
 }
